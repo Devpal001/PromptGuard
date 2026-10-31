@@ -1,0 +1,8 @@
+{
+  "name": "promptguard-workspace",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev.mjs"
+  }
+}

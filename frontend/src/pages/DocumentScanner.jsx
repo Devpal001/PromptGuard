@@ -1,0 +1,26 @@
+import React, { useRef, useState } from 'react'
+import axios from 'axios'
+import { FileSearch, FileText, FileUp, LockKeyhole, ArrowRight, Check, ShieldAlert } from 'lucide-react'
+
+export default function DocumentScanner() {
+  const inputRef = useRef(null)
+  const [file,setFile]=useState(null),[result,setResult]=useState(null),[loading,setLoading]=useState(false),[error,setError]=useState('')
+  const chooseFile=(next)=>{if(!next)return;setError('');setResult(null);if(next.size>10*1024*1024){setError('This file is larger than the 10 MB limit. Choose a smaller file.');return}if(!/\.(pdf|txt)$/i.test(next.name)){setError('Choose a PDF or TXT file.');return}setFile(next)}
+  const scanFile=async()=>{if(!file)return;setLoading(true);setError('');try{const form=new FormData();form.append('file',file);const {data}=await axios.post('/api/scan-file',form);setResult(data)}catch(err){setError(err.response?.data?.detail||'Could not scan this file. Check that the backend is running.')}finally{setLoading(false)}}
+  const verdictClass=(value)=>({Safe:'result-safe',Risky:'result-risky',Blocked:'result-blocked'}[value]||'result-error')
+  return <div className="tool-page">
+    <header className="page-header tool-page-header"><div><div className="eyebrow muted">INDIRECT INPUT · DOCUMENT ANALYSIS</div><h1>Document scanner</h1><p>Inspect document text for embedded instructions before deciding whether to test it against a chatbot.</p></div><span className="surface-tag"><LockKeyhole size={13}/> Files processed in session</span></header>
+    <div className="process-rail"><span className="process-active"><i>1</i> Upload file</span><ArrowRight size={14}/><span><i>2</i> Extract text</span><ArrowRight size={14}/><span><i>3</i> Review findings</span></div>
+    <div className="document-grid"><section className="card upload-card"><div className="card-heading"><div><span className="micro-label">DOCUMENT INPUT</span><h2>Choose a file to inspect</h2></div><span className="feature-icon violet-icon"><FileSearch size={18}/></span></div>
+      <button className={`dropzone${file?' has-file':''}`} type="button" onClick={()=>inputRef.current?.click()} onDragOver={e=>e.preventDefault()} onDrop={e=>{e.preventDefault();chooseFile(e.dataTransfer.files?.[0])}}><input ref={inputRef} type="file" accept=".pdf,.txt,application/pdf,text/plain" hidden onChange={e=>chooseFile(e.target.files?.[0])}/>{file?<><span className="drop-icon"><FileText size={22}/></span><strong>{file.name}</strong><span>{(file.size/1024).toFixed(0)} KB · click to replace</span></>:<><span className="drop-icon"><FileUp size={22}/></span><strong>Drop your PDF or TXT here</strong><span>or click to browse your files</span></>}</button>
+      <div className="upload-facts"><span>PDF or TXT</span><span>Up to 10 MB</span><span>No OCR for scanned PDFs</span></div><button className="btn scan-button" onClick={scanFile} disabled={!file||loading}>{loading?'Extracting and scanning…':'Scan document'} <ArrowRight size={14}/></button>
+    </section><aside className="card guidance-card"><span className="micro-label">DOCUMENT HANDLING</span><h2>What happens to your file?</h2><div className="guide-item"><span className="guide-icon guide-teal"><FileSearch size={15}/></span><div><strong>Text is extracted</strong><p>PDF text and TXT content are analyzed for suspicious instructions.</p></div></div><div className="guide-item"><span className="guide-icon guide-violet"><LockKeyhole size={15}/></span><div><strong>File is not retained</strong><p>The upload is processed for this scan and is not saved as session history.</p></div></div><div className="guide-note"><ShieldAlert size={14}/><span>Image-only PDFs may have no extractable text. This version does not run OCR.</span></div></aside></div>
+    {error&&<div className="inline-error" role="alert">{error}</div>}
+    {result&&<section className="card outcome-card"><div className="outcome-heading"><div><span className="micro-label">SCAN REPORT · {result.file_type?.toUpperCase()}</span><h2>{result.filename||file?.name}</h2></div><span className={`result-badge ${verdictClass(result.scan_result?.verdict)}`}>{result.scan_result?.verdict||'Needs review'}</span></div>
+      <div className={`extraction-status${result.extraction_status==='warning'?' extraction-warning':''}`}><span>{result.extraction_status==='warning'?'Extraction warning':'Text extraction complete'}</span><p>{result.extraction_message}</p></div>
+      {result.extracted_text&&<details className="extracted-preview"><summary>Review extracted text</summary><pre>{result.extracted_text.slice(0,2500)}{result.extracted_text.length>2500?'\n…':''}</pre></details>}
+      <p className="outcome-message">{result.scan_result?.message}</p>{result.scan_result?.findings?.length>0&&<ul className="evidence-list">{result.scan_result.findings.map((finding,i)=><li key={i}><strong>{finding.category}</strong><p>{finding.explanation}</p>{finding.evidence_excerpt&&<code>{finding.evidence_excerpt}</code>}</li>)}</ul>}
+      {result.scan_result?.verdict==='Risky'&&<div className="confirm-panel"><div><strong>Ready to test chatbot behavior?</strong><p>Continue to the Text Playground to review and confirm the chatbot test.</p></div><a className="button button-secondary" href="/text">Open playground <ArrowRight size={14}/></a></div>}
+    </section>}
+  </div>
+}
