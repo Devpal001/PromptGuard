@@ -7,7 +7,7 @@ router = APIRouter()
 scanner = Scanner()
 extractor = DocumentExtractor()
 
-MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
+MAX_FILE_SIZE = 4 * 1024 * 1024  # Keep room for multipart overhead under Vercel's 4.5 MB request limit.
 
 @router.post("/scan-text", response_model=ScanResponse)
 async def scan_text(request: ScanRequest):
@@ -31,7 +31,7 @@ async def scan_file(file: UploadFile = File(...)):
     
     # Check file size
     if len(content) > MAX_FILE_SIZE:
-        raise HTTPException(status_code=400, detail="File exceeds maximum size of 10MB")
+        raise HTTPException(status_code=400, detail="File exceeds maximum size of 4MB")
     
     if len(content) == 0:
         raise HTTPException(status_code=400, detail="File is empty")

@@ -61,6 +61,19 @@ Access at http://localhost:5173
 API docs at http://127.0.0.1:8000/docs  
 Health check at http://127.0.0.1:8000/api/health
 
+## Deploy to Vercel
+
+The repository is configured as one Vercel project with two services: a Vite web service and a FastAPI service. Both are served under one domain, so the frontend can keep calling the `/api/...` endpoints on the same origin.
+
+1. Import `Devpal001/PromptGuard` from the Vercel dashboard.
+2. Keep the project root at the repository root so Vercel can read `vercel.json`.
+3. Set the project's Framework Preset to **Services** in **Settings → Build and Deployment**.
+4. Deploy. Then confirm the API at `/api/health` and test text and document scanning.
+
+Vercel Services availability depends on the Vercel account. If the Services framework is not available, request access from Vercel or deploy the frontend and API as separate projects.
+
+Document uploads are limited to 4 MB so the file plus multipart request data stays below Vercel Functions' 4.5 MB request-body limit.
+
 ## Result Labels
 
 ### Scanner Results
@@ -87,4 +100,3 @@ Health check at http://127.0.0.1:8000/api/health
 - Demo mode is simulated
 - Single-turn testing only
 - Educational purpose only
-

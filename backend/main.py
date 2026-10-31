@@ -1,11 +1,8 @@
-from fastapi import FastAPI
-import uvicorn
+"""Vercel entry point and direct-run shim for the complete FastAPI application."""
 
-app = FastAPI()
-
-@app.get("/api/health")
-def health():
-    return {"status": "healthy"}
+from app.main import app
 
 if __name__ == "__main__":
+    import uvicorn
+
     uvicorn.run(app, host="127.0.0.1", port=8000)
