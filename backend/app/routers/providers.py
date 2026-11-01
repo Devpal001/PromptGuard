@@ -13,7 +13,7 @@ class ProviderTestRequest(BaseModel):
 
 @router.get("/providers")
 async def list_providers():
-    return {"providers": [{"name": "gemini", "models": ["gemini-1.5-flash", "gemini-1.5-pro"]}]}
+    return {"providers": [{"name": "gemini", "models": ["gemini-flash-latest"]}]}
 
 @router.post("/providers/test")
 async def test_provider(request: ProviderTestRequest):

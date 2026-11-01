@@ -22,7 +22,7 @@ class GeminiProvider(BaseProvider):
 
     def test_connection(self, config: Dict[str, Any]) -> Dict[str, Any]:
         key = self._api_key(config)
-        model = config.get("model", "gemini-1.5-flash")
+        model = config.get("model", "gemini-flash-latest")
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}?key={key}"
         try:
             r = httpx.get(url, timeout=10.0)
@@ -34,7 +34,7 @@ class GeminiProvider(BaseProvider):
 
     def send_prompt(self, config: Dict[str, Any], prompt: str, timeout: float = 30.0) -> Dict[str, Any]:
         key = self._api_key(config)
-        model = config.get("model", "gemini-1.5-flash")
+        model = config.get("model", "gemini-flash-latest")
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={key}"
         body = {"contents": [{"parts": [{"text": prompt}]}],
                 "generationConfig": {"maxOutputTokens": 512}}

@@ -1,6 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import os
+from pathlib import Path
+from dotenv import load_dotenv
+
+# Load backend/.env regardless of working directory
+env_path = Path(__file__).resolve().parents[1] / ".env"
+load_dotenv(dotenv_path=env_path)
 
 app = FastAPI(
     title="AI Prompt Injection Defense Tester API",

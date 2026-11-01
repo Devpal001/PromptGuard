@@ -28,7 +28,8 @@ def test_success(monkeypatch):
     assert r["text"] == "hello"
     assert r["model"] == "gemini-1.5-flash"
 
-def test_missing_key():
+def test_missing_key(monkeypatch):
+    monkeypatch.setattr("app.providers.gemini.os.getenv", lambda k: None)
     p = make_provider()
     try:
         p.send_prompt({"model": "m"}, "hi")
