@@ -1,2 +1,126 @@
-:root{font-family:Arial,Helvetica,sans-serif;color:#171717;background:#f3f1eb;font-synthesis:none;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-optical-sizing:auto;font-weight:400}*{box-sizing:border-box}html{min-width:320px;min-height:100%;background:#f3f1eb}body{margin:0;min-width:320px;min-height:100vh}button,input,textarea{font:inherit}button,a{-webkit-tap-highlight-color:transparent}button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #d92525;outline-offset:3px}::selection{background:#d92525;color:white}
+/* Swiss Modernism 2.0 with Soft UI - PromptGuard Design Tokens */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Color Palette - Warm neutral base with red accent */
+  --bg: #F3F1EC;
+  --surface: #FBFAF7;
+  --surface-sunk: #ECE9E2;
+  --ink: #161514;
+  --ink-muted: #5E5A55;
+  --line: rgba(22, 21, 20, 0.08);
+  
+  /* Red accent colors */
+  --red-50: #FDF0EE;
+  --red-100: #F9D9D5;
+  --red-500: #E03A2F;
+  --red-600: #CC2A21;
+  --red-700: #A81F18;
+  
+  /* Semantic colors */
+  --color-safe: #22c55e;
+  --color-risky: #f59e0b;
+  --color-blocked: #ef4444;
+  --color-error: #64748b;
+  
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  
+  /* Spacing scale (8pt) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+  
+  /* Border radius */
+  --radius-sm: 10px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-full: 999px;
+  
+  /* Shadows - soft, layered, warm-tinted */
+  --shadow-rest: 0 1px 2px rgba(22, 21, 20, 0.04), 0 4px 12px rgba(22, 21, 20, 0.04);
+  --shadow-hover: 0 2px 4px rgba(22, 21, 20, 0.05), 0 12px 28px rgba(22, 21, 20, 0.08);
+  --shadow-primary: 0 1px 2px rgba(204, 42, 33, 0.1), 0 4px 12px rgba(204, 42, 33, 0.25);
+  
+  /* Inner highlight */
+  --inner-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 90ms;
+  --duration-base: 150ms;
+  --duration-slow: 180ms;
+  --duration-enter: 220ms;
+  --duration-page: 420ms;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+  background: var(--bg);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  color: var(--ink);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid rgba(204, 42, 33, 0.35);
+  outline-offset: 2px;
+  transition: outline 200ms var(--ease-in-out);
+}
+
+::selection {
+  background: var(--red-100);
+  color: var(--ink);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
 
