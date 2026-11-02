@@ -77,3 +77,5 @@ QUALITY BAR AND DELIVERY
 - Check contrast of all text and the accent button. Verify keyboard tab order and visible focus on every control.
 - Run the existing build, lint and tests; nothing functional should change.
 - Finish with a short summary: what was removed, what was simplified, the final token list, and anything you intentionally left unchanged.
+
+NOTE: Accent is cyan (#38BDF8), not red. Red is reserved for danger states only.

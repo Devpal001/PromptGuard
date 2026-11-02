@@ -26,3 +26,5 @@
 6. Results.
 7. Settings.
 Risk areas: shared Layout affects all routes; ui components used in TextPlayground.
+
+NOTE: Accent is cyan (#38BDF8); red reserved for danger states.

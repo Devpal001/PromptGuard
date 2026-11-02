@@ -3,21 +3,21 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
-  /* Neutral near-black surfaces (Swiss Modernism) */
-  --bg: #0A0A0A;
-  --surface: #141414;
-  --surface-raised: #1C1C1C;
-  --surface-sunk: #0F0F0F;
-  --ink: #FAFAFA;
-  --ink-muted: #A1A1AA;
+  /* Midnight + Ice */
+  --bg: #0B1120;
+  --surface: #111C30;
+  --surface-raised: #17243A;
+  --surface-sunk: #0E1729;
+  --ink: #E2E8F0;
+  --ink-muted: #94A3B8;
   --ink-tertiary: #71717A;
-  --line: #27272A;
+  --line: #263751;
 
-  /* Red accent */
-  --accent: #DC2626;
-  --accent-hover: #B91C1C;
-  --accent-text: #F87171;
-  --accent-soft: rgba(220, 38, 38, 0.12);
+  /* Cyan accent */
+  --accent: #38BDF8;
+  --accent-hover: #22D3EE;
+  --accent-text: #38BDF8;
+  --accent-soft: rgba(56, 189, 248, 0.12);
 
   /* Semantic */
   --color-safe: #22C55E;
@@ -128,7 +128,7 @@ textarea:focus-visible {
 }
 /* UI component system */
 .ui-btn { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 8px; padding: 8px 14px; background: var(--surface); color: var(--ink); cursor: pointer; font: inherit; transition: background 120ms ease, border-color 120ms ease; }
-.ui-btn--primary { background: var(--accent); color: #FAFAFA; border-color: var(--accent); }
+.ui-btn--primary { background: var(--accent); color: #0B1120; border-color: var(--accent); }
 .ui-btn--primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
 .ui-btn--secondary { background: var(--surface-sunk); }
 .ui-btn--ghost { background: transparent; border-color: transparent; }
