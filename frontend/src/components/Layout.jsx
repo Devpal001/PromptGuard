@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
-import { ShieldCheck, LayoutDashboard, ScanLine, FileSearch, BarChart3, Settings2, HelpCircle, ArrowUpRight, Sparkles } from 'lucide-react'
+import { ShieldCheck, LayoutDashboard, ScanLine, FileSearch, BarChart3, Settings2, HelpCircle, ArrowUpRight } from 'lucide-react'
 
 const links = [
   { to: '/', label: 'Overview', icon: LayoutDashboard, end: true },
@@ -13,28 +13,34 @@ const pageNames = { '/': 'Overview', '/text': 'Text playground', '/document': 'D
 
 export default function Layout({ children }) {
   const location = useLocation()
+  const [open, setOpen] = useState(false)
   const title = pageNames[location.pathname] || 'Workspace'
   return (
     <div className="app-shell">
-      <aside className="sidebar">
+      <button className="sidebar-toggle" onClick={() => setOpen(true)} aria-label="Open navigation">Menu</button>
+      {open && <div className="sidebar-overlay" onClick={() => setOpen(false)} />}
+      <aside className={`sidebar ${open ? 'is-open' : ''}`}>
+        <button className="sidebar-close" onClick={() => setOpen(false)} aria-label="Close navigation">×</button>
         <a className="brand" href="/" aria-label="PromptGuard home">
-          <span className="brand-mark"><ShieldCheck size={21} strokeWidth={2.2} /></span>
-          <span className="brand-copy"><strong>PromptGuard</strong><small>AI security lab</small></span>
+          <span className="brand-mark"><ShieldCheck size={16} strokeWidth={2.2} /></span>
+          <span className="brand-copy"><strong>PromptGuard</strong></span>
         </a>
-        <div className="workspace-label">WORKSPACE</div>
         <nav className="sidebar-nav" aria-label="Main navigation">
-          {links.map(({ to, label, icon: Icon, end }) => <NavLink key={to} to={to} end={end} className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}><Icon size={18} /><span>{label}</span>{label === 'Test results' && <span className="nav-count">Live</span>}</NavLink>)}
+          {links.map(({ to, label, icon: Icon, end }) => (
+            <NavLink key={to} to={to} end={end} className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`} onClick={() => setOpen(false)}>
+              <Icon size={16} /><span>{label}</span>
+            </NavLink>
+          ))}
         </nav>
-        <div className="sidebar-bottom">
-          <div className="sidebar-note"><span className="note-icon"><Sparkles size={15} /></span><div><strong>Built for safe testing</strong><p>Use only with systems you own or are authorized to assess.</p></div></div>
+        <div className="sidebar-footer">
+          <span className="sidebar-status"><span className="status-dot" /> Local, session only</span>
           <a className="help-link" href="/settings"><HelpCircle size={16} /> Help & guidance <ArrowUpRight size={14} /></a>
-          <div className="profile-row"><div className="avatar">AI</div><div><strong>Local workspace</strong><span>Session-only data</span></div><span className="online-dot" /></div>
+          <p className="sidebar-quiet">Use only with systems you own or are authorized to assess.</p>
         </div>
       </aside>
       <div className="main-column">
-        <header className="topbar"><div className="crumb"><span>Workspace</span><b>/</b><strong>{title}</strong></div><div className="topbar-right"><span className="environment-pill"><i /> Demo environment</span><span className="topbar-divider" /><span className="topbar-caption">Educational use</span></div></header>
+        <header className="topbar"><div className="crumb"><span>Workspace</span><b>/</b><strong>{title}</strong></div><div className="topbar-right"><span className="topbar-caption">Demo mode</span></div></header>
         <main className="page-content">{children}</main>
-        <footer className="app-footer"><span>PromptGuard <span className="footer-dot">·</span> AI Prompt Injection Defense Tester</span><span>Screening aid only — no result guarantees safety</span></footer>
       </div>
     </div>
   )

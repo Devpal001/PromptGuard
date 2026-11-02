@@ -976,3 +976,20 @@
   .privacy-check { display: none; }
   .settings-mode-copy { flex-direction: column; }
 }
+/* Phase 2 shell refinements */
+.sidebar-toggle { display: none; }
+.sidebar-overlay { display: none; }
+.sidebar-close { display: none; }
+.sidebar-footer { margin-top: auto; display: flex; flex-direction: column; gap: 8px; }
+.sidebar-status { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-muted); font-size: 13px; }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-safe); }
+.sidebar-quiet { color: var(--ink-tertiary); font-size: 12px; margin: 0; }
+.nav-link { position: relative; }
+.nav-link.active::before { content: ''; position: absolute; left: 0; top: 6px; bottom: 6px; width: 2px; background: var(--accent); border-radius: 2px; }
+@media (max-width: 768px) {
+  .sidebar-toggle { display: inline-flex; }
+  .sidebar { position: fixed; left: -260px; top: 0; bottom: 0; transition: left 150ms ease-out; z-index: 60; }
+  .sidebar.is-open { left: 0; }
+  .sidebar-overlay { display: block; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 50; }
+  .sidebar-close { display: inline-flex; position: absolute; top: 8px; right: 8px; background: transparent; border: none; color: var(--ink-muted); font-size: 20px; cursor: pointer; }
+}
