@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, ArrowUpRight, ShieldCheck, ScanLine, FileSearch, LockKeyhole, FlaskConical, Activity } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, ShieldCheck, ScanLine, FileSearch, LockKeyhole, FlaskConical, Activity, Wifi, Settings2 } from 'lucide-react'
 
 const Overview = () => (
   <div className="overview-page">
@@ -34,6 +34,28 @@ const Overview = () => (
           <ShieldCheck size={48} strokeWidth={2} />
         </div>
         <div className="hero-glow" />
+      </div>
+    </section>
+
+    <section className="section">
+      <div className="section-header">
+        <div>
+          <div className="eyebrow muted">SYSTEM STATUS</div>
+          <h2 className="section-title">Runtime overview</h2>
+          <p className="section-subtitle">Current state of the PromptGuard workspace.</p>
+        </div>
+      </div>
+      <div className="card-grid">
+        <div className="card">
+          <div className="card-header"><div className="card-icon card-icon-cyan"><ShieldCheck size={22} /></div></div>
+          <h3 className="card-title">Detection engine</h3>
+          <p className="card-description">Rule-based screening active. Demo and Connected modes available.</p>
+        </div>
+        <div className="card">
+          <div className="card-header"><div className="card-icon card-icon-cyan"><Wifi size={22} /></div></div>
+          <h3 className="card-title">Provider</h3>
+          <p className="card-description">Gemini integration configured via backend. Test from Text Playground.</p>
+        </div>
       </div>
     </section>
 
@@ -120,6 +142,46 @@ const Overview = () => (
           <h3 className="workflow-title">Evaluate the response</h3>
           <p className="workflow-description">Review the target response, expected behavior, verdict, and supporting evidence.</p>
         </div>
+      </div>
+    </section>
+
+    <section className="section">
+      <div className="section-header">
+        <div>
+          <div className="eyebrow muted">QUICK ACTIONS</div>
+          <h2 className="section-title">Jump to a tool</h2>
+          <p className="section-subtitle">Shortcuts to existing features.</p>
+        </div>
+      </div>
+      <div className="card-grid">
+        <Link to="/text" className="card card-hover">
+          <div className="card-header"><div className="card-icon card-icon-cyan"><ScanLine size={22} /></div></div>
+          <h3 className="card-title">Text Playground</h3>
+          <p className="card-description">Scan prompts and test chatbot responses.</p>
+        </Link>
+        <Link to="/document" className="card card-hover">
+          <div className="card-header"><div className="card-icon card-icon-cyan"><FileSearch size={22} /></div></div>
+          <h3 className="card-title">Document Scanner</h3>
+          <p className="card-description">Inspect PDF and TXT content.</p>
+        </Link>
+        <Link to="/settings" className="card card-hover">
+          <div className="card-header"><div className="card-icon card-icon-cyan"><Settings2 size={22} /></div></div>
+          <h3 className="card-title">Settings</h3>
+          <p className="card-description">Provider and application settings.</p>
+        </Link>
+      </div>
+    </section>
+
+    <section className="section">
+      <div className="section-header">
+        <div>
+          <div className="eyebrow muted">ANALYTICS</div>
+          <h2 className="section-title">Detection history</h2>
+          <p className="section-subtitle">No historical records are available yet.</p>
+        </div>
+      </div>
+      <div className="card">
+        <p className="card-description">Analysis results are session-only. Run scans in the Text Playground to generate new findings.</p>
       </div>
     </section>
 

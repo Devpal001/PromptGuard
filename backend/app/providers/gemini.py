@@ -44,25 +44,35 @@ class GeminiProvider(BaseProvider):
         body = {"contents": [{"parts": [{"text": prompt}]}],
                 "generationConfig": {"maxOutputTokens": 512}}
         last_error = None
-        for attempt in range(3):
+        # Allow brief upstream outages to recover without exhausting the
+        # serverless request window. Keep attempts bounded and honor the
+        # provider's Retry-After hint when it is a delta in seconds.
+        max_attempts = 4
+        for attempt in range(max_attempts):
             try:
                 r = httpx.post(url, json=body, timeout=timeout)
             except httpx.TimeoutException:
                 last_error = ProviderError("Gemini request timed out")
-                if attempt < 2:
-                    time.sleep(0.5 * (2 ** attempt) + random.random() * 0.2)
+                if attempt < max_attempts - 1:
+                    time.sleep(min(1.0 * (2 ** attempt), 4.0) + random.random() * 0.25)
                     continue
                 raise last_error
+            except httpx.TransportError as e:
+                last_error = ProviderError("Gemini network connection failed")
+                if attempt < max_attempts - 1:
+                    time.sleep(min(1.0 * (2 ** attempt), 4.0) + random.random() * 0.25)
+                    continue
+                raise last_error from e
             except Exception as e:
                 raise ProviderError(str(e))
-            if r.status_code in (502, 503, 504):
+            if r.status_code in (500, 502, 503, 504):
                 last_error = ProviderError("Gemini service temporarily unavailable")
-                if attempt < 2:
-                    delay = 0.5 * (2 ** attempt)
+                if attempt < max_attempts - 1:
+                    delay = min(1.0 * (2 ** attempt), 4.0)
                     retry_after = r.headers.get("Retry-After")
                     if retry_after and retry_after.isdigit():
-                        delay = min(float(retry_after), 5.0)
-                    time.sleep(delay + random.random() * 0.2)
+                        delay = min(float(retry_after), 4.0)
+                    time.sleep(delay + random.random() * 0.25)
                     continue
                 raise last_error
             if r.status_code == 429:

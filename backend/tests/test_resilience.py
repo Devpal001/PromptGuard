@@ -47,7 +47,21 @@ def test_503_exhausted(monkeypatch):
         assert False
     except ProviderError as e:
         assert "unavailable" in str(e).lower() or "503" in str(e)
-    assert calls["n"] == 3
+    assert calls["n"] == 4
+
+def test_network_error_then_success(monkeypatch):
+    p = make_provider()
+    calls = {"n": 0}
+    def fake_post(url, json=None, timeout=None):
+        calls["n"] += 1
+        if calls["n"] == 1:
+            raise httpx.ConnectError("temporary network interruption")
+        return FakeResp(200, {"candidates": [{"content": {"parts": [{"text": "ok"}]}}]})
+    monkeypatch.setattr("app.providers.gemini.httpx.post", fake_post)
+    monkeypatch.setattr("app.providers.gemini.time.sleep", lambda x: None)
+    r = p.send_prompt({"model": "m", "api_key": "secret"}, "hi")
+    assert r["text"] == "ok"
+    assert calls["n"] == 2
 
 def test_timeout_then_success(monkeypatch):
     p = make_provider()

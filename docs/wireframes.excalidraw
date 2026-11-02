@@ -1,0 +1,192 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {
+      "id": "wireframe_title",
+      "type": "text",
+      "x": 100,
+      "y": 50,
+      "width": 500,
+      "height": 35,
+      "text": "Wireframe - App Shell & Key Pages",
+      "fontSize": 28,
+      "fontFamily": 1,
+      "textAlign": "left",
+      "verticalAlign": "top"
+    },
+    {
+      "id": "app_shell",
+      "type": "rectangle",
+      "x": 100,
+      "y": 150,
+      "width": 900,
+      "height": 600,
+      "strokeColor": "#64748b",
+      "backgroundColor": "#0f172a",
+      "fillStyle": "solid"
+    },
+    {
+      "id": "sidebar",
+      "type": "rectangle",
+      "x": 100,
+      "y": 150,
+      "width": 200,
+      "height": 600,
+      "strokeColor": "#475569",
+      "backgroundColor": "#1e293b",
+      "fillStyle": "solid"
+    },
+    {
+      "id": "topbar",
+      "type": "rectangle",
+      "x": 300,
+      "y": 150,
+      "width": 700,
+      "height": 60,
+      "strokeColor": "#475569",
+      "backgroundColor": "#1e293b",
+      "fillStyle": "solid"
+    },
+    {
+      "id": "sidebar_nav",
+      "type": "text",
+      "x": 120,
+      "y": 180,
+      "width": 160,
+      "height": 200,
+      "text": "Navigation:\n\n• Overview\n• Text Playground\n• Document Scanner\n• Results\n• Settings",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "textAlign": "left",
+      "verticalAlign": "top"
+    },
+    {
+      "id": "topbar_text",
+      "type": "text",
+      "x": 320,
+      "y": 175,
+      "width": 300,
+      "height": 20,
+      "text": "AI Prompt Injection Defense Tester | Mode: DEMO",
+      "fontSize": 12,
+      "fontFamily": 1,
+      "textAlign": "left",
+      "verticalAlign": "top"
+    },
+    {
+      "id": "main_content",
+      "type": "rectangle",
+      "x": 320,
+      "y": 230,
+      "width": 660,
+      "height": 500,
+      "strokeColor": "#475569",
+      "backgroundColor": "#0f172a",
+      "fillStyle": "solid"
+    },
+    {
+      "id": "text_playground_label",
+      "type": "text",
+      "x": 340,
+      "y": 250,
+      "width": 200,
+      "height": 25,
+      "text": "Text Playground",
+      "fontSize": 20,
+      "fontFamily": 1,
+      "textAlign": "left",
+      "verticalAlign": "top"
+    },
+    {
+      "id": "text_area",
+      "type": "rectangle",
+      "x": 340,
+      "y": 290,
+      "width": 620,
+      "height": 150,
+      "strokeColor": "#64748b",
+      "backgroundColor": "#1e293b",
+      "fillStyle": "solid",
+      "roundness": {"type": 3}
+    },
+    {
+      "id": "scan_btn",
+      "type": "rectangle",
+      "x": 340,
+      "y": 460,
+      "width": 100,
+      "height": 35,
+      "strokeColor": "#14b8a6",
+      "backgroundColor": "#14b8a6",
+      "fillStyle": "solid",
+      "roundness": {"type": 3}
+    },
+    {
+      "id": "scan_btn_text",
+      "type": "text",
+      "x": 370,
+      "y": 468,
+      "width": 40,
+      "height": 20,
+      "text": "Scan",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "strokeColor": "#ffffff"
+    },
+    {
+      "id": "scanner_result_card",
+      "type": "rectangle",
+      "x": 340,
+      "y": 515,
+      "width": 620,
+      "height": 80,
+      "strokeColor": "#22c55e",
+      "backgroundColor": "#1e293b",
+      "fillStyle": "solid",
+      "roundness": {"type": 3}
+    },
+    {
+      "id": "scanner_result_label",
+      "type": "text",
+      "x": 360,
+      "y": 530,
+      "width": 100,
+      "height": 20,
+      "text": "Scanner: Safe",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "textAlign": "left"
+    },
+    {
+      "id": "chatbot_section",
+      "type": "rectangle",
+      "x": 340,
+      "y": 615,
+      "width": 620,
+      "height": 100,
+      "strokeColor": "#475569",
+      "backgroundColor": "#1e293b",
+      "fillStyle": "solid",
+      "roundness": {"type": 3}
+    },
+    {
+      "id": "chatbot_label",
+      "type": "text",
+      "x": 360,
+      "y": 630,
+      "width": 150,
+      "height": 20,
+      "text": "Chatbot Defense Test",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "textAlign": "left"
+    }
+  ],
+  "appState": {
+    "gridSize": null,
+    "viewBackgroundColor": "#0f172a"
+  }
+}
