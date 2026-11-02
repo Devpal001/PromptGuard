@@ -25,7 +25,7 @@
       }
     },
     {
-      "source": "/((?!api|assets).*)",
+      "source": "/:path*",
       "destination": {
         "service": "web",
         "path": "/index.html"
