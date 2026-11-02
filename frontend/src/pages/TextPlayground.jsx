@@ -15,11 +15,9 @@ function PageHeading() {
   return (
     <header className="tool-page-heading">
       <div>
-        <span className="eyebrow muted">TEXT PLAYGROUND</span>
         <h1>Test a prompt</h1>
         <p>Screen suspicious text, review the evidence, then evaluate the chatbot response.</p>
       </div>
-      <span className="context-pill"><LockKeyhole size={15} /> Demo target</span>
     </header>
   )
 }
