@@ -28,7 +28,7 @@ function ProcessSteps() {
     <ol className="process-steps" aria-label="Testing steps">
       {steps.map((label, index) => (
         <li className={index === 0 ? 'process-step current' : 'process-step'} key={label}>
-          <span>{String(index + 1).padStart(2, '0')}</span>{label}
+          <span>{index + 1}</span> {label}
         </li>
       ))}
     </ol>
