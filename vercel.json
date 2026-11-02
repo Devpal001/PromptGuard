@@ -18,9 +18,17 @@
       }
     },
     {
-      "source": "/(.*)",
+      "source": "/assets/:path*",
       "destination": {
-        "service": "web"
+        "service": "web",
+        "path": "/assets/:path*"
+      }
+    },
+    {
+      "source": "/((?!api|assets).*)",
+      "destination": {
+        "service": "web",
+        "path": "/index.html"
       }
     }
   ]
