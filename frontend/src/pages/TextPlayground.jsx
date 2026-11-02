@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { ArrowRight, Check, Clipboard, LockKeyhole, ScanLine, ShieldAlert, ShieldCheck, Wifi } from 'lucide-react'
-import { Button } from '../components/ui/Button'
+import StepIndicator from './StepIndicator'
 import { Textarea } from '../components/ui/Textarea'
 import { Alert } from '../components/ui/Alert'
 import { Badge } from '../components/ui/Badge'
@@ -112,7 +112,7 @@ export default function TextPlayground() {
   return (
     <div className="tool-page">
       <PageHeading />
-      <ProcessSteps />
+      <StepIndicator current={chatbotResult ? 2 : scanResult ? 1 : 0} />
 
       <InputCard
         text={text} setText={setText} loading={loading} mode={mode} setMode={setMode}
