@@ -1,21 +1,27 @@
 /* Swiss Modernism 2.0 with Soft UI - PromptGuard Design Tokens */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
-  /* Color Palette - Warm neutral base with red accent */
-  --bg: #F3F1EC;
-  --surface: #FBFAF7;
-  --surface-sunk: #ECE9E2;
-  --ink: #161514;
-  --ink-muted: #5E5A55;
-  --line: rgba(22, 21, 20, 0.08);
+  /* Midnight + Ice */
+  --bg: #0B1120;
+  --surface: #111C30;
+  --surface-sunk: #0E1729;
+  --ink: #E2E8F0;
+  --ink-muted: #94A3B8;
+  --line: #263751;
+
+  /* Ice-blue interaction accents */
+  --accent: #38BDF8;
+  --accent-strong: #22D3EE;
+  --accent-soft: rgba(56, 189, 248, 0.12);
   
   /* Red accent colors */
-  --red-50: #FDF0EE;
-  --red-100: #F9D9D5;
-  --red-500: #E03A2F;
-  --red-600: #CC2A21;
-  --red-700: #A81F18;
+  --red-50: rgba(239, 68, 68, 0.12);
+  --red-100: rgba(239, 68, 68, 0.22);
+  --red-500: #EF4444;
+  --red-600: #EF4444;
+  --red-700: #F87171;
   
   /* Semantic colors */
   --color-safe: #22c55e;
@@ -25,6 +31,7 @@
   
   /* Typography */
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
   
   /* Spacing scale (8pt) */
   --space-1: 4px;
@@ -45,12 +52,12 @@
   --radius-full: 999px;
   
   /* Shadows - soft, layered, warm-tinted */
-  --shadow-rest: 0 1px 2px rgba(22, 21, 20, 0.04), 0 4px 12px rgba(22, 21, 20, 0.04);
-  --shadow-hover: 0 2px 4px rgba(22, 21, 20, 0.05), 0 12px 28px rgba(22, 21, 20, 0.08);
-  --shadow-primary: 0 1px 2px rgba(204, 42, 33, 0.1), 0 4px 12px rgba(204, 42, 33, 0.25);
+  --shadow-rest: 0 1px 2px rgba(2, 6, 23, 0.2), 0 4px 12px rgba(2, 6, 23, 0.16);
+  --shadow-hover: 0 2px 4px rgba(2, 6, 23, 0.24), 0 12px 28px rgba(2, 6, 23, 0.28);
+  --shadow-primary: 0 1px 2px rgba(56, 189, 248, 0.12), 0 4px 12px rgba(56, 189, 248, 0.18);
   
   /* Inner highlight */
-  --inner-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  --inner-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.04);
   
   /* Motion */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -103,13 +110,13 @@ button:focus-visible,
 a:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid rgba(204, 42, 33, 0.35);
+  outline: 2px solid rgba(56, 189, 248, 0.5);
   outline-offset: 2px;
   transition: outline 200ms var(--ease-in-out);
 }
 
 ::selection {
-  background: var(--red-100);
+  background: var(--accent-soft);
   color: var(--ink);
 }
 
@@ -123,3 +130,36 @@ textarea:focus-visible {
     transition-duration: 0.01ms !important;
   }
 }
+/* UI component system */
+.ui-btn { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 8px; padding: 8px 14px; background: var(--surface); color: var(--ink); cursor: pointer; font: inherit; transition: background 120ms ease, border-color 120ms ease; }
+.ui-btn--primary { background: var(--accent); color: #0B1120; border-color: var(--accent); }
+.ui-btn--primary:hover { background: var(--accent-strong); border-color: var(--accent-strong); }
+.ui-btn--secondary { background: var(--surface-sunk); }
+.ui-btn--ghost { background: transparent; border-color: transparent; }
+.ui-btn--sm { padding: 4px 10px; font-size: 13px; }
+.ui-btn--lg { padding: 12px 20px; font-size: 15px; }
+.ui-card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+.ui-card__header { margin-bottom: 8px; }
+.ui-card__title { margin: 0; font-size: 16px; color: var(--ink); }
+.ui-card__content { color: var(--ink-muted); }
+.ui-badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; border: 1px solid var(--line); background: var(--surface-sunk); color: var(--ink-muted); }
+.ui-badge--success { background: #22C55E22; color: #22C55E; border-color: #22C55E44; }
+.ui-badge--warning { background: #F59E0B22; color: #F59E0B; border-color: #F59E0B44; }
+.ui-badge--critical { background: #EF444422; color: #EF4444; border-color: #EF444444; }
+.ui-input, .ui-textarea { width: 100%; background: var(--surface-sunk); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; color: var(--ink); font: inherit; }
+.ui-textarea { min-height: 120px; font-family: var(--font-mono); }
+.ui-tabs__list { display: flex; gap: 4px; border-bottom: 1px solid var(--line); margin-bottom: 12px; }
+.ui-tabs__trigger { background: transparent; border: none; padding: 8px 12px; color: var(--ink-muted); cursor: pointer; border-bottom: 2px solid transparent; }
+.ui-tabs__trigger.is-active { color: var(--accent); border-bottom-color: var(--accent); }
+.ui-dialog__overlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); display: flex; align-items: center; justify-content: center; z-index: 50; }
+.ui-dialog__content { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px; min-width: 320px; position: relative; }
+.ui-dialog__title { margin: 0 0 12px; color: var(--ink); }
+.ui-dialog__close { position: absolute; top: 8px; right: 12px; background: transparent; border: none; color: var(--ink-muted); cursor: pointer; font-size: 20px; }
+.ui-tooltip { cursor: help; }
+.ui-alert { padding: 10px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface-sunk); color: var(--ink); }
+.ui-alert--info { border-left: 3px solid var(--accent); }
+.ui-alert--warning { border-left: 3px solid #F59E0B; }
+.ui-alert--error { border-left: 3px solid #EF4444; }
+.ui-progress { height: 6px; background: var(--surface-sunk); border-radius: 999px; overflow: hidden; }
+.ui-progress__bar { height: 100%; background: var(--accent); transition: width 200ms ease; }
+.ui-separator { border: none; border-top: 1px solid var(--line); margin: 12px 0; }
