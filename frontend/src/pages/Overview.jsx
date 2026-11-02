@@ -30,10 +30,6 @@ const Overview = () => (
         </div>
       </div>
       <div className="hero-visual">
-        <div className="hero-shield">
-          <ShieldCheck size={48} strokeWidth={2} />
-        </div>
-        <div className="hero-glow" />
       </div>
     </section>
 
@@ -45,18 +41,10 @@ const Overview = () => (
           <p className="section-subtitle">Current state of the PromptGuard workspace.</p>
         </div>
       </div>
-      <div className="card-grid">
-        <div className="card">
-          <div className="card-header"><div className="card-icon card-icon-cyan"><ShieldCheck size={22} /></div></div>
-          <h3 className="card-title">Detection engine</h3>
-          <p className="card-description">Rule-based screening active. Demo and Connected modes available.</p>
-        </div>
-        <div className="card">
-          <div className="card-header"><div className="card-icon card-icon-cyan"><Wifi size={22} /></div></div>
-          <h3 className="card-title">Provider</h3>
-          <p className="card-description">Gemini integration configured via backend. Test from Text Playground.</p>
-        </div>
-      </div>
+      <dl className="status-list">
+        <div><dt>Detection engine</dt><dd>Rule-based screening active. Demo and Connected modes available.</dd></div>
+        <div><dt>Provider</dt><dd>Gemini integration configured via backend. Test from Text Playground.</dd></div>
+      </dl>
     </section>
 
     <section className="section">
