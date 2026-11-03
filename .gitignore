@@ -38,3 +38,6 @@ desktop.ini
 .pytest_cache/
 .coverage
 htmlcov/
+
+.codex-pptx-build/
+

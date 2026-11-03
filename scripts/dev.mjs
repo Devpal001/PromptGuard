@@ -25,7 +25,7 @@ function findPython() {
 const python = findPython()
 console.log(`[Launcher] Using Python: ${python}`)
 
-const api = spawn(python, ['-m', 'uvicorn', 'app.main:app', '--reload', '--host', '127.0.0.1', '--port', '8000'], { 
+const api = spawn(python, ['-m', 'uvicorn', 'app.main:app', '--reload', '--host', '127.0.0.1', '--port', '8001'], { 
   cwd: backendDir, 
   stdio: 'inherit',
   windowsHide: true
@@ -90,6 +90,7 @@ process.on('SIGTERM', () => stop(0))
 
 console.log('[Launcher] Starting PromptGuard services...')
 console.log('[Launcher] Frontend: http://localhost:5173')
-console.log('[Launcher] Backend:  http://127.0.0.1:8000')
-console.log('[Launcher] API Docs:  http://127.0.0.1:8000/docs')
+console.log('[Launcher] Backend:  http://127.0.0.1:8001')
+console.log('[Launcher] API Docs:  http://127.0.0.1:8001/docs')
 console.log('[Launcher] Press Ctrl+C to stop both services')
+
