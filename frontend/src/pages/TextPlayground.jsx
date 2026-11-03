@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import { ArrowRight, Check, Clipboard, LockKeyhole, ScanLine, ShieldAlert, ShieldCheck, Wifi } from 'lucide-react'
+import { ArrowRight, Check, Clipboard, LockKeyhole, ScanLine, ShieldAlert, ShieldCheck } from 'lucide-react'
 import StepIndicator from './StepIndicator'
 import { Textarea } from '../components/ui/Textarea'
 import { Alert } from '../components/ui/Alert'
@@ -61,10 +61,6 @@ export default function TextPlayground() {
   const [loading, setLoading] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
   const [error, setError] = useState('')
-  const [mode, setMode] = useState('demo')
-  const [providerStatus, setProviderStatus] = useState('')
-  const [providerInfo, setProviderInfo] = useState(null)
-  const [testingProvider, setTestingProvider] = useState(false)
 
   const scanText = async () => {
     if (!text.trim()) return
@@ -81,27 +77,12 @@ export default function TextPlayground() {
   const testChatbot = async () => {
     setLoading(true); setError('')
     try {
-      const payload = { text, mode }
-      if (mode === 'connected') {
-        payload.target_config = { model_name: 'gemini-3.8-flash' }
-      }
+      const payload = { text, mode: 'demo' }
       const { data } = await axios.post('/api/test-chatbot', payload)
       setChatbotResult(data); setShowConfirm(false)
     } catch (err) {
       setError(err.response?.data?.detail || 'Could not reach the chatbot test service.')
     } finally { setLoading(false) }
-  }
-
-  const testProvider = async () => {
-    setTestingProvider(true); setProviderStatus('')
-    try {
-      const { data } = await axios.post('/api/providers/test', { model: 'gemini-3.8-flash' })
-      setProviderInfo(data)
-      setProviderStatus('Connection successful')
-    } catch (err) {
-      setProviderInfo(null)
-      setProviderStatus(err.response?.data?.detail || 'Connection failed')
-    } finally { setTestingProvider(false) }
   }
 
   const badgeClass = (value) => ({ Safe: 'result-safe', Risky: 'result-risky', Blocked: 'result-blocked' }[value] || 'result-error')
@@ -113,8 +94,7 @@ export default function TextPlayground() {
       <StepIndicator current={chatbotResult ? 2 : scanResult ? 1 : 0} />
 
       <InputCard
-        text={text} setText={setText} loading={loading} mode={mode} setMode={setMode}
-        providerStatus={providerStatus} providerInfo={providerInfo} testingProvider={testingProvider} testProvider={testProvider}
+        text={text} setText={setText} loading={loading}
         scanText={scanText} resetSample={resetSample} error={error}
       />
 

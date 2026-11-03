@@ -1,11 +1,10 @@
 import React from 'react'
-import { ArrowRight, LockKeyhole, ScanLine } from 'lucide-react'
+import { ScanLine } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { Textarea } from '../components/ui/Textarea'
-import { Alert } from '../components/ui/Alert'
 
 export default function InputCard({
-  text, setText, loading, mode, setMode, providerStatus, providerInfo, testingProvider, testProvider,
+  text, setText, loading,
   scanText, resetSample, error,
 }) {
   return (
@@ -23,22 +22,10 @@ export default function InputCard({
         <button className="text-action" type="button" onClick={resetSample}>Load sample attack</button>
       </div>
       <div className="form-actions">
-        <div className="segmented">
-          <button className={mode === 'demo' ? 'is-active' : ''} onClick={() => setMode('demo')}>Demo</button>
-          <button className={mode === 'connected' ? 'is-active' : ''} onClick={() => setMode('connected')}>Connected</button>
-        </div>
         <Button variant="primary" onClick={scanText} disabled={loading || !text.trim()}>
           <ScanLine size={17} />{loading ? 'Scanning…' : 'Scan input'}
         </Button>
       </div>
-      {mode === 'connected' && (
-        <div>
-          <p className="privacy-hint">Provider: Gemini · Model: gemini-3.8-flash</p>
-          <Button variant="secondary" onClick={testProvider} disabled={testingProvider}>{testingProvider ? 'Testing…' : 'Test connection'}</Button>
-          {providerStatus && <Alert variant="info"><p>{providerStatus}</p></Alert>}
-          {providerInfo?.ok && <Alert variant="info"><p>Connected to {providerInfo.model}</p></Alert>}
-        </div>
-      )}
     </section>
   )
 }
