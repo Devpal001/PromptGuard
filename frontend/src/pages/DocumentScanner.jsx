@@ -1,39 +1,8 @@
 import React, { useRef, useState } from 'react'
 import axios from 'axios'
-import { ArrowRight, FileSearch, FileText, FileUp, LockKeyhole, ShieldAlert, ShieldCheck } from 'lucide-react'
-
-function PageHeading() {
-  return (
-    <header className="tool-page-heading">
-      <div>
-        <span className="eyebrow muted">DOCUMENT SCANNER</span>
-        <h1>Inspect a document</h1>
-        <p>Extract document text and check for embedded instructions before using it with a chatbot.</p>
-      </div>
-      <span className="context-pill"><LockKeyhole size={15} /> Files processed in session</span>
-    </header>
-  )
-}
-
-function DocumentGuidance() {
-  return (
-    <aside className="surface-card guidance-panel">
-      <div className="panel-heading">
-        <span className="panel-icon"><ShieldCheck size={19} /></span>
-        <div><h2>Document handling</h2><p>What happens during a scan.</p></div>
-      </div>
-      <div className="guidance-item">
-        <span className="guidance-marker marker-red"><FileSearch size={16} /></span>
-        <div><h3>Text is extracted</h3><p>PDF text and TXT content are checked for suspicious instructions.</p></div>
-      </div>
-      <div className="guidance-item">
-        <span className="guidance-marker"><LockKeyhole size={16} /></span>
-        <div><h3>File is not retained</h3><p>The upload is processed for this scan and is not saved as session history.</p></div>
-      </div>
-      <div className="notice-panel"><ShieldAlert size={15} /><p>Image-only PDFs may have no extractable text. This version does not run OCR.</p></div>
-    </aside>
-  )
-}
+import { ArrowRight, FileSearch, FileText, FileUp, LockKeyhole, ShieldAlert } from 'lucide-react'
+import { Button } from '../components/ui/Button'
+import { Alert } from '../components/ui/Alert'
 
 export default function DocumentScanner() {
   const inputRef = useRef(null)
@@ -68,45 +37,48 @@ export default function DocumentScanner() {
 
   return (
     <div className="tool-page">
-      <PageHeading />
+      <header className="tool-page-heading">
+        <div>
+          <h1>Inspect a document</h1>
+          <p>Extract document text and check for embedded instructions before using it with a chatbot.</p>
+        </div>
+      </header>
+
       <ol className="process-steps" aria-label="Document scan steps">
-        <li className="process-step current"><span>01</span>Upload file</li>
-        <li className="process-step"><span>02</span>Extract text</li>
-        <li className="process-step"><span>03</span>Review findings</li>
+        <li className="process-step current"><span>1</span> Upload file</li>
+        <li className="process-step"><span>2</span> Extract text</li>
+        <li className="process-step"><span>3</span> Review findings</li>
       </ol>
 
-      <div className="workbench-grid">
-        <section className="surface-card upload-panel">
-          <div className="panel-heading">
-            <span className="panel-icon panel-icon-red"><FileSearch size={19} /></span>
-            <div><h2>Choose a file to inspect</h2><p>PDF and TXT files, up to 4 MB.</p></div>
-          </div>
-          <button
-            className={`upload-zone${file ? ' has-file' : ''}`}
-            type="button"
-            onClick={() => inputRef.current?.click()}
-            onDragOver={event => event.preventDefault()}
-            onDrop={event => { event.preventDefault(); chooseFile(event.dataTransfer.files?.[0]) }}
-          >
-            <input ref={inputRef} type="file" accept=".pdf,.txt,application/pdf,text/plain" hidden onChange={event => chooseFile(event.target.files?.[0])} />
-            <span className="upload-icon">{file ? <FileText size={23} /> : <FileUp size={23} />}</span>
-            <strong>{file ? file.name : 'Drop your document here'}</strong>
-            <span>{file ? `${(file.size / 1024).toFixed(0)} KB · click to replace` : 'or click to browse · PDF or TXT'}</span>
-          </button>
-          <div className="upload-meta"><span>Maximum file size</span><strong>4 MB</strong><span className="meta-separator" /><span>No OCR for scanned PDFs</span></div>
-          <button className="btn btn-primary" onClick={scanFile} disabled={!file || loading}>
-            <FileSearch size={17} />{loading ? 'Extracting and scanning…' : 'Scan document'}<ArrowRight size={16} className="btn-arrow" />
-          </button>
-        </section>
-        <DocumentGuidance />
-      </div>
+      <section className="surface-card upload-panel">
+        <button
+          className={`upload-zone${file ? ' has-file' : ''}`}
+          type="button"
+          onClick={() => inputRef.current?.click()}
+          onDragOver={event => event.preventDefault()}
+          onDrop={event => { event.preventDefault(); chooseFile(event.dataTransfer.files?.[0]) }}
+        >
+          <input ref={inputRef} type="file" accept=".pdf,.txt,application/pdf,text/plain" hidden onChange={event => chooseFile(event.target.files?.[0])} />
+          <span className="upload-icon">{file ? <FileText size={23} /> : <FileUp size={23} />}</span>
+          <strong>{file ? file.name : 'Drop your document here'}</strong>
+          <span>{file ? `${(file.size / 1024).toFixed(0)} KB · click to replace` : 'or click to browse · PDF or TXT'}</span>
+        </button>
+        <p className="quiet-note">PDF or TXT, up to 4 MB. Processed in this session and not stored. No OCR for scanned PDFs.</p>
+        <details className="disclosure">
+          <summary>What happens to my file</summary>
+          <p>Text is extracted and checked for suspicious instructions. The upload is processed for this scan and is not saved as session history.</p>
+        </details>
+        <Button variant="primary" onClick={scanFile} disabled={!file || loading}>
+          <FileSearch size={17} />{loading ? 'Extracting and scanning…' : 'Scan document'}
+        </Button>
+      </section>
 
-      {error && <div className="feedback-panel feedback-error" role="alert"><ShieldAlert size={17} />{error}</div>}
+      {error && <Alert variant="error" role="alert"><ShieldAlert size={17} />{error}</Alert>}
 
       {result && (
         <section className="surface-card result-panel">
           <div className="result-panel-heading">
-            <div><span className="eyebrow muted">DOCUMENT SCREENING · {result.file_type?.toUpperCase()}</span><h2>{result.filename || file?.name}</h2></div>
+            <div><h2>{result.filename || file?.name}</h2></div>
             <span className={`result-badge ${verdictClass(result.scan_result?.verdict)}`}>{result.scan_result?.verdict || 'Needs review'}</span>
           </div>
           <div className={`extraction-panel${result.extraction_status === 'warning' ? ' extraction-warning' : ''}`}>
@@ -122,3 +94,4 @@ export default function DocumentScanner() {
     </div>
   )
 }
+
