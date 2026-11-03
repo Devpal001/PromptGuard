@@ -25,7 +25,7 @@ From the project root:
 npm run dev
 ```
 
-This starts both the FastAPI backend (http://127.0.0.1:8000) and React frontend (http://localhost:5173) concurrently. Press Ctrl+C to stop both services.
+This starts both the FastAPI backend (http://127.0.0.1:8001) and React frontend (http://localhost:5173) concurrently. Press Ctrl+C to stop both services.
 
 ### One-Time Setup
 
@@ -48,7 +48,7 @@ If you need to start services separately:
 **Backend:**
 ```bash
 cd backend
-python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8001
 ```
 
 **Frontend:**
@@ -58,8 +58,8 @@ npm run dev
 ```
 
 Access at http://localhost:5173  
-API docs at http://127.0.0.1:8000/docs  
-Health check at http://127.0.0.1:8000/api/health
+API docs at http://127.0.0.1:8001/docs  
+Health check at http://127.0.0.1:8001/api/health
 
 ## Deploy to Vercel
 

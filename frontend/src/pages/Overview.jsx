@@ -42,8 +42,8 @@ const Overview = () => (
         </div>
       </div>
       <dl className="status-list">
-        <div><dt>Detection engine</dt><dd>Rule-based screening active. Demo and Connected modes available.</dd></div>
-        <div><dt>Provider</dt><dd>Gemini integration configured via backend. Test from Text Playground.</dd></div>
+        <div><dt>Detection engine</dt><dd>Rule-based screening active. Demo mode available.</dd></div>
+        <div><dt>Target</dt><dd>Local demo simulator for safe, educational testing.</dd></div>
       </dl>
     </section>
 
@@ -155,7 +155,7 @@ const Overview = () => (
         <Link to="/settings" className="card card-hover">
           <div className="card-header"><div className="card-icon card-icon-cyan"><Settings2 size={22} /></div></div>
           <h3 className="card-title">Settings</h3>
-          <p className="card-description">Provider and application settings.</p>
+          <p className="card-description">Demo mode and application settings.</p>
         </Link>
       </div>
     </section>

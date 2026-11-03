@@ -41,9 +41,8 @@ async def health_check():
     }
 
 # Import routers
-from app.routers import scan, test, scenarios, providers
+from app.routers import scan, test, scenarios
 
 app.include_router(scan.router, prefix="/api", tags=["scan"])
 app.include_router(test.router, prefix="/api", tags=["test"])
 app.include_router(scenarios.router, prefix="/api", tags=["scenarios"])
-app.include_router(providers.router, prefix="/api", tags=["providers"])

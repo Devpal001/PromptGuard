@@ -1,5 +1,5 @@
 import React from 'react'
-import { HelpCircle, Database, KeyRound, LockKeyhole, ShieldCheck } from 'lucide-react'
+import { HelpCircle } from 'lucide-react'
 
 const privacyItems = [
   { title: 'Credentials stay on the backend', detail: 'API credentials are never exposed in the browser.' },
@@ -23,7 +23,7 @@ const Settings = () => (
         <p>Ready to use without API credentials. Chatbot responses are simulated for educational testing.</p>
       </div>
       <span className="mode-status"><span className="status-dot" /> Active</span>
-      <div className="settings-mode-footer"><HelpCircle size={16} /><span>Connected mode requires API configuration on the backend.</span></div>
+      <div className="settings-mode-footer"><HelpCircle size={16} /><span>All chatbot tests run locally in the demo simulator. No API credentials are required.</span></div>
     </section>
 
     <section className="section privacy-section">

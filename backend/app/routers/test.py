@@ -1,10 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from app.modules.models import TestRequest, TestResponse
 from datetime import datetime
-from app.providers.gemini import GeminiProvider
-from app.providers.base import ProviderError
-
-provider = GeminiProvider()
 
 router = APIRouter()
 
@@ -17,13 +13,6 @@ async def test_chatbot(request: TestRequest):
     
     if len(request.text) > 50000:
         raise HTTPException(status_code=400, detail="Text exceeds maximum length of 50000 characters")
-    
-    if request.mode not in ["demo", "connected"]:
-        raise HTTPException(status_code=400, detail="Mode must be 'demo' or 'connected'")
-    
-    if request.mode == "connected":
-        if not request.target_config or not request.target_config.get("model_name"):
-            raise HTTPException(status_code=400, detail="Connected mode requires model_name")
     
     # Demo mode
     if request.mode == "demo":
@@ -73,37 +62,3 @@ async def test_chatbot(request: TestRequest):
             timestamp=datetime.now().isoformat()
         )
     
-    # Connected mode
-    if request.mode == "connected":
-        config = request.target_config or {}
-        if not config.get("endpoint_url"):
-            # Use Gemini if configured
-            try:
-                result = provider.send_prompt(config, request.text)
-                return TestResponse(
-                    result_label="Completed",
-                    response=result["text"],
-                    evidence=["Real provider response"],
-                    mode="connected",
-                    model_identifier=result["model"],
-                    timestamp=datetime.now().isoformat()
-                )
-            except ProviderError as e:
-                return TestResponse(
-                    result_label="Error",
-                    response="",
-                    evidence=[str(e)],
-                    mode="connected",
-                    model_identifier=config.get("model_name", "gemini"),
-                    timestamp=datetime.now().isoformat(),
-                    error_message=str(e)
-                )
-        return TestResponse(
-            result_label="Error",
-            response="",
-            evidence=["Connected mode requires proper backend implementation"],
-            mode="connected",
-            model_identifier=request.target_config.get("model_name", "unknown"),
-            timestamp=datetime.now().isoformat(),
-            error_message="Connected mode not fully implemented in this version"
-        )

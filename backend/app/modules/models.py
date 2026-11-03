@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List, Optional, Literal
 
 class ScanRequest(BaseModel):
     text: str
@@ -25,8 +25,7 @@ class ScanResponse(BaseModel):
 
 class TestRequest(BaseModel):
     text: str
-    mode: str  # demo or connected
-    target_config: Optional[dict] = None
+    mode: Literal["demo"] = "demo"
     scenario_context: Optional[dict] = None
 
 class TestResponse(BaseModel):
