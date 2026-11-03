@@ -13,14 +13,15 @@ class ProviderTestRequest(BaseModel):
 
 @router.get("/providers")
 async def list_providers():
-    return {"providers": [{"name": "gemini", "models": ["gemini-flash-latest"]}]}
+    return {"providers": [{"name": "gemini", "models": ["gemini-3.8-flash"]}]}
 
 @router.post("/providers/test")
 async def test_provider(request: ProviderTestRequest):
-    config = {"model": request.model or "gemini-1.5-flash"}
+    config = {"model": request.model or "gemini-3.8-flash"}
     if request.api_key:
         config["api_key"] = request.api_key
     result = provider.test_connection(config)
     if not result.get("ok"):
         raise HTTPException(status_code=400, detail=result.get("error", "connection failed"))
     return result
+

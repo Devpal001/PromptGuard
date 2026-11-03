@@ -16,7 +16,9 @@ class GeminiProvider(BaseProvider):
         return key
 
     def _model(self, config: Dict[str, Any]) -> str:
-        return config.get("model") or os.getenv("GEMINI_MODEL", "gemini-flash-latest")
+        # The UI historically sends model_name while provider callers use model.
+        # Accept both so the selected model is not silently ignored.
+        return config.get("model") or config.get("model_name") or os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
 
     def validate_config(self, config: Dict[str, Any]) -> bool:
         try:
