@@ -1,6 +1,5 @@
-/* Swiss Modernism 2.0 with Soft UI - PromptGuard Design Tokens */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+/* PromptGuard typography: condensed editorial headings, practical UI, precise evidence. */
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Sans+3:wght@400;500;600;700&display=swap');
 
 :root {
   /* Midnight + Ice */
@@ -26,8 +25,9 @@
   --color-error: #71717A;
   
   /* Typography */
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
+  --font-sans: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+  --font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
   
   /* Spacing scale (8pt) */
   --space-1: 4px;
@@ -65,6 +65,24 @@
   --duration-page: 420ms;
 }
 
+:root[data-theme="light"] {
+  --bg: #F3F6FA;
+  --surface: #FFFFFF;
+  --surface-raised: #FFFFFF;
+  --surface-sunk: #F6F8FB;
+  --ink: #17283F;
+  --ink-muted: #52647B;
+  --ink-tertiary: #6B7A90;
+  --line: #D8E0EA;
+  --accent: #087F9D;
+  --accent-hover: #066A84;
+  --accent-text: #087F9D;
+  --accent-soft: rgba(8, 127, 157, 0.10);
+  --shadow-rest: 0 1px 2px rgba(24, 45, 74, 0.04), 0 5px 16px rgba(24, 45, 74, 0.06);
+  --shadow-hover: 0 8px 24px rgba(24, 45, 74, 0.12);
+  --inner-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -73,7 +91,10 @@ html {
   min-width: 320px;
   min-height: 100%;
   background: var(--bg);
+  color-scheme: dark;
 }
+
+:root[data-theme="light"] { color-scheme: light; }
 
 body {
   margin: 0;

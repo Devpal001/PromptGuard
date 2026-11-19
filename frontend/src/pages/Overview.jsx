@@ -1,185 +1,48 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, ArrowUpRight, ShieldCheck, ScanLine, FileSearch, LockKeyhole, FlaskConical, Activity, Wifi, Settings2 } from 'lucide-react'
+import { Activity, ArrowRight, ArrowUpRight, FileSearch, LockKeyhole, ScanLine, ShieldCheck, Sparkles } from 'lucide-react'
+import { useWorkspace } from '../WorkspaceContext'
 
-const Overview = () => (
-  <div className="overview-page">
-    <section className="hero-panel">
-      <div className="hero-copy">
-        <div className="eyebrow">
-          <span className="eyebrow-dot" />
-          AI SECURITY LAB
-        </div>
-        <h1 className="hero-title">
-          Test the boundaries.<br />
-          <span className="hero-title-accent">Strengthen the response.</span>
-        </h1>
-        <p className="hero-subtitle">
-          Scan text and documents for prompt injection patterns, then test approved content against a chatbot with clear, evidence-led results.
-        </p>
-        <div className="hero-actions">
-          <Link to="/text" className="btn btn-primary">
-            <ScanLine size={18} />
-            Start a text test
-            <ArrowRight size={16} className="btn-arrow" />
-          </Link>
-          <Link to="/document" className="btn btn-secondary">
-            <FileSearch size={18} />
-            Scan a document
-          </Link>
-        </div>
-      </div>
-      <div className="hero-visual">
-      </div>
-    </section>
+const Overview = () => {
+  const { sessionResults } = useWorkspace()
+  const riskyCount = sessionResults.filter(item => ['Risky', 'Blocked'].includes(item.scannerVerdict)).length
 
-    <section className="section">
-      <div className="section-header">
+  return (
+    <div className="overview-page">
+      <section className="overview-intro">
         <div>
-          <div className="eyebrow muted">SYSTEM STATUS</div>
-          <h2 className="section-title">Runtime overview</h2>
-          <p className="section-subtitle">Current state of the PromptGuard workspace.</p>
+          <span className="eyebrow"><span className="eyebrow-dot" /> PROMPT INJECTION SECURITY LAB</span>
+          <h1>Test how your AI handles hostile instructions.</h1>
+          <p>Scan text and documents for suspicious instructions, then check how the demo target responds.</p>
         </div>
-      </div>
-      <dl className="status-list">
-        <div><dt>Detection engine</dt><dd>Rule-based screening active. Demo mode available.</dd></div>
-        <div><dt>Target</dt><dd>Local demo simulator for safe, educational testing.</dd></div>
-      </dl>
-    </section>
+        <div className="overview-actions">
+          <Link to="/text" className="btn btn-primary"><ScanLine size={17} /> New text test <ArrowRight size={16} /></Link>
+          <Link to="/document" className="btn btn-secondary"><FileSearch size={17} /> Inspect a document</Link>
+        </div>
+      </section>
 
-    <section className="section">
-      <div className="section-header">
-        <div>
-          <div className="eyebrow muted">WORKSPACE</div>
-          <h2 className="section-title">Choose a testing path</h2>
-          <p className="section-subtitle">Scan content first, then decide whether to test it against the chatbot.</p>
-        </div>
-        <Link to="/results" className="link-arrow">
-          View results
-          <ArrowUpRight size={16} />
-        </Link>
-      </div>
-      
-      <div className="card-grid">
-        <Link to="/text" className="card card-hover">
-          <div className="card-header">
-            <div className="card-icon card-icon-cyan">
-              <ScanLine size={22} />
-            </div>
-          </div>
-          <h3 className="card-title">Text playground</h3>
-          <p className="card-description">
-            Scan a prompt for suspicious instructions, then test the chatbot's response with a clear confirmation step.
-          </p>
-          <div className="card-footer">
-            <span className="card-meta">Text scanner · Chatbot evaluation</span>
-            <ArrowRight size={18} className="card-arrow" />
-          </div>
-        </Link>
-        
-        <Link to="/document" className="card card-hover">
-          <div className="card-header">
-            <div className="card-icon card-icon-red">
-              <FileSearch size={22} />
-            </div>
-          </div>
-          <h3 className="card-title">Document scanner</h3>
-          <p className="card-description">
-            Inspect PDF and TXT content for embedded instructions and test how the chatbot treats that context.
-          </p>
-          <div className="card-footer">
-            <span className="card-meta">PDF · TXT · No file retention</span>
-            <ArrowRight size={18} className="card-arrow" />
-          </div>
-        </Link>
-      </div>
-    </section>
+      <section className="overview-status-grid" aria-label="Workspace status">
+        <article className="status-card"><span className="status-card-icon status-icon-green"><ShieldCheck size={18} /></span><div><span className="status-label">Screening</span><strong>Rule-based checks active</strong><small>Demo engine ready</small></div><span className="status-indicator">Active</span></article>
+        <article className="status-card"><span className="status-card-icon"><Activity size={18} /></span><div><span className="status-label">Session scans</span><strong>{sessionResults.length} {sessionResults.length === 1 ? 'result' : 'results'}</strong><small>{riskyCount} need review</small></div></article>
+        <article className="status-card"><span className="status-card-icon"><LockKeyhole size={18} /></span><div><span className="status-label">Data handling</span><strong>Session only</strong><small>Nothing saved as history</small></div></article>
+      </section>
 
-    <section className="section">
-      <div className="section-header">
-        <div>
-          <div className="eyebrow muted">WORKFLOW</div>
-          <h2 className="section-title">Two checks. One clear result.</h2>
+      <section className="section overview-workspace-section">
+        <div className="section-header"><div><span className="eyebrow muted">TEST SURFACE</span><h2 className="section-title">Choose an input</h2><p className="section-subtitle">Review the evidence before deciding what to test next.</p></div><Link to="/results" className="link-arrow">View session results <ArrowUpRight size={16} /></Link></div>
+        <div className="card-grid overview-tool-grid">
+          <Link to="/text" className="card card-hover tool-choice-card"><div className="card-icon card-icon-cyan"><ScanLine size={21} /></div><div><span className="tool-card-kicker">01 / TEXT INPUT</span><h3 className="card-title">Test an input</h3><p className="card-description">Find suspicious instruction patterns, inspect the evidence, and try the demo target when appropriate.</p></div><ArrowRight className="card-arrow" size={18} /></Link>
+          <Link to="/document" className="card card-hover tool-choice-card"><div className="card-icon card-icon-cyan"><FileSearch size={21} /></div><div><span className="tool-card-kicker">02 / DOCUMENT INPUT</span><h3 className="card-title">Inspect a document</h3><p className="card-description">Extract text from a PDF or TXT file and check it for embedded instructions.</p></div><ArrowRight className="card-arrow" size={18} /></Link>
         </div>
-      </div>
-      
-      <div className="workflow-grid">
-        <div className="workflow-card">
-          <div className="workflow-number">01</div>
-          <div className="workflow-icon">
-            <ScanLine size={20} />
-          </div>
-          <h3 className="workflow-title">Inspect the input</h3>
-          <p className="workflow-description">Rule-based screening highlights patterns that may signal an injection attempt.</p>
-        </div>
-        
-        <div className="workflow-card">
-          <div className="workflow-number">02</div>
-          <div className="workflow-icon">
-            <LockKeyhole size={20} />
-          </div>
-          <h3 className="workflow-title">Review and confirm</h3>
-          <p className="workflow-description">Risky content requires your confirmation before it is sent to the chatbot.</p>
-        </div>
-        
-        <div className="workflow-card">
-          <div className="workflow-number">03</div>
-          <div className="workflow-icon">
-            <FlaskConical size={20} />
-          </div>
-          <h3 className="workflow-title">Evaluate the response</h3>
-          <p className="workflow-description">Review the target response, expected behavior, verdict, and supporting evidence.</p>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <section className="section">
-      <div className="section-header">
-        <div>
-          <div className="eyebrow muted">QUICK ACTIONS</div>
-          <h2 className="section-title">Jump to a tool</h2>
-          <p className="section-subtitle">Shortcuts to existing features.</p>
-        </div>
-      </div>
-      <div className="card-grid">
-        <Link to="/text" className="card card-hover">
-          <div className="card-header"><div className="card-icon card-icon-cyan"><ScanLine size={22} /></div></div>
-          <h3 className="card-title">Text Playground</h3>
-          <p className="card-description">Scan prompts and test chatbot responses.</p>
-        </Link>
-        <Link to="/document" className="card card-hover">
-          <div className="card-header"><div className="card-icon card-icon-cyan"><FileSearch size={22} /></div></div>
-          <h3 className="card-title">Document Scanner</h3>
-          <p className="card-description">Inspect PDF and TXT content.</p>
-        </Link>
-        <Link to="/settings" className="card card-hover">
-          <div className="card-header"><div className="card-icon card-icon-cyan"><Settings2 size={22} /></div></div>
-          <h3 className="card-title">Settings</h3>
-          <p className="card-description">Demo mode and application settings.</p>
-        </Link>
-      </div>
-    </section>
+      <section className="overview-lower-grid">
+        <article className="surface-card overview-learning-card"><div className="panel-heading"><span className="panel-icon"><Sparkles size={18} /></span><div><span className="eyebrow muted">WORKFLOW</span><h2>From signal to response</h2></div></div><ol className="overview-steps"><li><span>01</span><div><strong>Scan untrusted input</strong><p>Check for patterns commonly used in prompt injection.</p></div></li><li><span>02</span><div><strong>Inspect the evidence</strong><p>Review the matched text and context before continuing.</p></div></li><li><span>03</span><div><strong>Test the demo response</strong><p>See whether the simulated target follows the expected safe behavior.</p></div></li></ol><details className="disclosure"><summary>How to read a finding</summary><p><strong>No pattern matched</strong> is not proof of safety. <strong>Evidence</strong> shows what influenced a finding. Scanner screening and chatbot evaluation are separate checks.</p></details></article>
+        <article className="surface-card recent-session-card"><div className="section-header"><div><span className="eyebrow muted">RECENT ACTIVITY</span><h2 className="section-title">This session</h2></div><Link to="/results" className="icon-link" aria-label="Open results"><ArrowUpRight size={18} /></Link></div>{sessionResults.length ? <ul className="recent-result-list">{sessionResults.slice(0, 3).map(item => <li key={item.id}><span className={`result-dot ${item.scannerVerdict.toLowerCase().replace(/\s+/g, '-')}`} /><div><strong>{item.title || item.source}</strong><small>{item.source} · {new Date(item.createdAt).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</small></div><span className={`result-badge ${item.scannerVerdict === 'Safe' ? 'result-safe' : item.scannerVerdict === 'Risky' ? 'result-risky' : 'result-blocked'}`}>{item.scannerVerdict}</span></li>)}</ul> : <div className="session-empty"><span className="empty-icon"><Activity size={20} /></span><strong>No scans in this session yet</strong><p>Run a text or document scan to see findings and response checks here.</p><Link to="/results" className="link-arrow">Explore sample results <ArrowRight size={15} /></Link></div>}</article>
+      </section>
 
-    <section className="section">
-      <div className="section-header">
-        <div>
-          <div className="eyebrow muted">ANALYTICS</div>
-          <h2 className="section-title">Detection history</h2>
-          <p className="section-subtitle">No historical records are available yet.</p>
-        </div>
-      </div>
-      <div className="card">
-        <p className="card-description">Analysis results are session-only. Run scans in the Text Playground to generate new findings.</p>
-      </div>
-    </section>
-
-    <div className="disclaimer">
-      <Activity size={18} />
-      <p>
-        <strong>Interpret results carefully.</strong> "Safe" means no supported pattern matched; it does not prove that content is safe. This educational tool is not a complete security defense.
-      </p>
+      <p className="overview-disclaimer"><ShieldCheck size={16} /><span><strong>Screening aid only.</strong> PromptGuard is an educational demo, not a complete security defense.</span></p>
     </div>
-  </div>
-)
+  )
+}
 
 export default Overview

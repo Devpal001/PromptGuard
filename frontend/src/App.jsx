@@ -7,20 +7,23 @@ import DocumentScanner from './pages/DocumentScanner'
 import Results from './pages/Results'
 import Settings from './pages/Settings'
 import './styles/App.css'
+import { WorkspaceProvider } from './WorkspaceContext'
 
 function App() {
   return (
-    <Router>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Overview />} />
-          <Route path="/text" element={<TextPlayground />} />
-          <Route path="/document" element={<DocumentScanner />} />
-          <Route path="/results" element={<Results />} />
-          <Route path="/settings" element={<Settings />} />
-        </Routes>
-      </Layout>
-    </Router>
+    <WorkspaceProvider>
+      <Router>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Overview />} />
+            <Route path="/text" element={<TextPlayground />} />
+            <Route path="/document" element={<DocumentScanner />} />
+            <Route path="/results" element={<Results />} />
+            <Route path="/settings" element={<Settings />} />
+          </Routes>
+        </Layout>
+      </Router>
+    </WorkspaceProvider>
   )
 }
 

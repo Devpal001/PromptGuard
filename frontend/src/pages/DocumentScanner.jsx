@@ -3,8 +3,10 @@ import axios from 'axios'
 import { ArrowRight, FileSearch, FileText, FileUp, LockKeyhole, ShieldAlert } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { Alert } from '../components/ui/Alert'
+import { useWorkspace } from '../WorkspaceContext'
 
 export default function DocumentScanner() {
+  const { addResult } = useWorkspace()
   const inputRef = useRef(null)
   const [file, setFile] = useState(null)
   const [result, setResult] = useState(null)
@@ -28,6 +30,12 @@ export default function DocumentScanner() {
       form.append('file', file)
       const { data } = await axios.post('/api/scan-file', form)
       setResult(data)
+      addResult({
+        source: 'Document scan', title: data.filename || file.name,
+        scannerVerdict: data.scan_result?.verdict || 'Needs review',
+        scannerSummary: data.scan_result?.message || data.extraction_message,
+        categories: data.scan_result?.categories || [], findings: data.scan_result?.findings || [],
+      })
     } catch (err) {
       setError(err.response?.data?.detail || 'Could not scan this file. Check that the backend is running.')
     } finally { setLoading(false) }
@@ -40,7 +48,7 @@ export default function DocumentScanner() {
       <header className="tool-page-heading">
         <div>
           <h1>Inspect a document</h1>
-          <p>Extract document text and check for embedded instructions before using it with a chatbot.</p>
+          <p>Extract text from a PDF or TXT file and check it for embedded instructions.</p>
         </div>
       </header>
 
@@ -60,7 +68,7 @@ export default function DocumentScanner() {
         >
           <input ref={inputRef} type="file" accept=".pdf,.txt,application/pdf,text/plain" hidden onChange={event => chooseFile(event.target.files?.[0])} />
           <span className="upload-icon">{file ? <FileText size={23} /> : <FileUp size={23} />}</span>
-          <strong>{file ? file.name : 'Drop your document here'}</strong>
+        <strong>{file ? file.name : 'Add a document for inspection'}</strong>
           <span>{file ? `${(file.size / 1024).toFixed(0)} KB · click to replace` : 'or click to browse · PDF or TXT'}</span>
         </button>
         <p className="quiet-note">PDF or TXT, up to 4 MB. Processed in this session and not stored. No OCR for scanned PDFs.</p>

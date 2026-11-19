@@ -9,17 +9,17 @@ export default function InputCard({
 }) {
   return (
     <section className="surface-card input-panel">
-      <label className="field-label" htmlFor="prompt-text">Prompt or suspicious content</label>
+      <label className="field-label" htmlFor="prompt-text">Untrusted text to inspect</label>
       <Textarea
         id="prompt-text"
         maxLength={20000}
         value={text}
         onChange={event => setText(event.target.value)}
-        placeholder={'Paste text to inspect…'}
+        placeholder={'Paste untrusted text here…'}
       />
       <div className="input-toolbar">
         <span className="quiet-note">{text.length.toLocaleString()} / 20,000 characters</span>
-        <button className="text-action" type="button" onClick={resetSample}>Load sample attack</button>
+        <button className="text-action" type="button" onClick={resetSample}>Load sample input</button>
       </div>
       <div className="form-actions">
         <Button variant="primary" onClick={scanText} disabled={loading || !text.trim()}>
