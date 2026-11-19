@@ -9,7 +9,7 @@ export default function StepIndicator({ current = 0 }) {
         const state = index < current ? 'done' : index === current ? 'current' : 'future'
         return (
           <li key={label} className={`step-indicator__item step-indicator__item--${state}`} aria-current={index === current ? 'step' : undefined}>
-            {index < current && <span aria-hidden="true">✓</span>} {index + 1} {label}
+            <span className="step-indicator__number" aria-hidden="true">{index < current ? '✓' : String(index + 1).padStart(2, '0')}</span>{label}
           </li>
         )
       })}

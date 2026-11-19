@@ -12,6 +12,7 @@ export default function DocumentScanner() {
   const [result, setResult] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const currentStep = result ? 2 : file ? 1 : 0
 
   const chooseFile = next => {
     if (!next) return
@@ -52,10 +53,16 @@ export default function DocumentScanner() {
         </div>
       </header>
 
-      <ol className="process-steps" aria-label="Document scan steps">
-        <li className="process-step current"><span>1</span> Upload file</li>
-        <li className="process-step"><span>2</span> Extract text</li>
-        <li className="process-step"><span>3</span> Review findings</li>
+      <ol className="process-steps" aria-label="Document scan progress">
+        {['Upload file', 'Extract text', 'Review findings'].map((label, index) => {
+          const isComplete = index < currentStep
+          const isCurrent = index === currentStep
+          return (
+            <li key={label} className={`process-step${isCurrent ? ' current' : ''}${isComplete ? ' complete' : ''}`} aria-current={isCurrent ? 'step' : undefined}>
+              <span>{isComplete ? '✓' : String(index + 1).padStart(2, '0')}</span>{label}
+            </li>
+          )
+        })}
       </ol>
 
       <section className="surface-card upload-panel">
