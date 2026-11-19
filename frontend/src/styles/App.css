@@ -1487,3 +1487,124 @@ body { letter-spacing: .005em; }
   .overview-intro h1, .tool-page-heading h1, .results-heading h1 { font-size: clamp(38px, 9vw, 50px); }
   .surface-card { border-radius: 6px; }
 }
+
+/* Animated security atmosphere and interactive attack-surface monitor. */
+.app-shell { position: relative; isolation: isolate; }
+.cyber-atmosphere {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background-image:
+    radial-gradient(ellipse at 82% 13%, rgba(29, 129, 153, .10), transparent 38%),
+    linear-gradient(rgba(91, 148, 166, .035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(91, 148, 166, .035) 1px, transparent 1px);
+  background-size: auto, 42px 42px, 42px 42px;
+  animation: grid-drift 42s linear infinite;
+}
+.cyber-atmosphere::after {
+  position: absolute;
+  top: -30%;
+  right: 8%;
+  width: 1px;
+  height: 160%;
+  background: linear-gradient(transparent, rgba(41, 199, 216, .24), transparent);
+  content: '';
+  opacity: .42;
+  transform: rotate(28deg);
+}
+.cyber-scanline {
+  position: absolute;
+  top: -35%;
+  left: 0;
+  width: 100%;
+  height: 22%;
+  background: linear-gradient(180deg, transparent, rgba(41, 199, 216, .035), transparent);
+  animation: atmosphere-scan 22s linear infinite;
+}
+.sidebar, .main-column { position: relative; z-index: 1; }
+
+.overview-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(250px, 292px);
+  align-items: center;
+  gap: clamp(20px, 4vw, 54px);
+}
+.overview-intro-copy { display: flex; min-width: 0; flex-direction: column; align-items: flex-start; gap: 20px; }
+.overview-intro-copy > div:first-child { max-width: 760px; }
+.overview-intro h1 { max-width: 700px; }
+.overview-actions { padding: 0; }
+
+.threat-radar {
+  display: grid;
+  min-width: 0;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid #2A4652;
+  border-radius: 7px;
+  background: linear-gradient(145deg, rgba(14, 28, 38, .88), rgba(9, 17, 25, .82));
+  box-shadow: inset 0 1px rgba(255,255,255,.025);
+}
+.threat-radar-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: var(--ink-muted); font: 9px/1.4 var(--font-mono); letter-spacing: .07em; }
+.radar-mode { display: inline-flex; align-items: center; gap: 6px; color: #80A4AE; }
+.radar-mode i { width: 6px; height: 6px; border-radius: 50%; background: #49C690; box-shadow: 0 0 8px rgba(73,198,144,.35); }
+.radar-instrument { position: relative; width: 100%; aspect-ratio: 1.28; min-height: 172px; }
+.radar-rings {
+  position: absolute;
+  inset: 7px 27px 7px 27px;
+  overflow: hidden;
+  border: 1px solid rgba(73, 152, 169, .23);
+  border-radius: 50%;
+  background:
+    repeating-radial-gradient(circle, transparent 0 22px, rgba(73, 152, 169, .18) 23px 24px, transparent 25px 42px),
+    linear-gradient(90deg, transparent calc(50% - .5px), rgba(73, 152, 169, .16) 50%, transparent calc(50% + .5px)),
+    linear-gradient(0deg, transparent calc(50% - .5px), rgba(73, 152, 169, .16) 50%, transparent calc(50% + .5px));
+}
+.radar-sweep { position: absolute; inset: 0; border-radius: inherit; background: conic-gradient(from 0deg, transparent 0 302deg, rgba(41,199,216,.02) 318deg, rgba(41,199,216,.18) 350deg, transparent 360deg); animation: radar-rotate 13s linear infinite; }
+.radar-axis { position: absolute; top: 50%; left: 50%; width: 44%; height: 1px; background: rgba(73,152,169,.18); transform-origin: left center; }
+.radar-axis-x { transform: rotate(28deg); }.radar-axis-y { transform: rotate(148deg); }
+.radar-core { position: absolute; top: 50%; left: 50%; z-index: 2; display: grid; width: 40px; height: 40px; place-items: center; border: 1px solid rgba(41,199,216,.55); border-radius: 50%; background: #0E1C25; color: var(--accent); box-shadow: 0 0 18px rgba(41,199,216,.12); transform: translate(-50%,-50%); transition: color 180ms ease, border-color 180ms ease, box-shadow 180ms ease; }
+.radar-blip { position: absolute; width: 5px; height: 5px; border-radius: 50%; background: #E3A94C; box-shadow: 0 0 9px rgba(227,169,76,.55); animation: signal-pulse 2.8s ease-in-out infinite; }
+.radar-blip-one { top: 29%; left: 30%; }.radar-blip-two { top: 65%; right: 28%; animation-delay: 1.2s; }
+.radar-node { position: absolute; z-index: 3; display: inline-flex; min-height: 30px; align-items: center; gap: 5px; padding: 4px 6px; border: 1px solid transparent; border-radius: 4px; background: #0D1921; color: #93A9B0; cursor: pointer; font: 8px/1 var(--font-mono); letter-spacing: .04em; transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease, transform 160ms ease; }
+.radar-node:hover, .radar-node.is-active { border-color: rgba(41,199,216,.42); background: #112832; color: #71E2EC; }
+.radar-node:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.radar-node-text { top: 5%; left: 0; }.radar-node-file { top: 6%; right: 0; }.radar-node-target { bottom: 0; left: 50%; transform: translateX(-50%); }
+.radar-node-target:hover, .radar-node-target.is-active { transform: translateX(-50%) translateY(-1px); }
+.radar-node-dot { width: 5px; height: 5px; border: 1px solid currentColor; border-radius: 50%; }
+.radar-node.is-active .radar-node-dot { background: currentColor; box-shadow: 0 0 7px currentColor; }
+.radar-readout { display: grid; grid-template-columns: 78px minmax(0,1fr); gap: 9px; min-height: 59px; padding: 9px 2px 1px; border-top: 1px solid rgba(73,152,169,.22); }
+.radar-readout-index { padding-top: 2px; color: var(--accent); font: 8px/1.5 var(--font-mono); letter-spacing: .04em; }
+.radar-readout strong { display: block; color: #DDE8EA; font-family: var(--font-display); font-size: 18px; font-weight: 600; line-height: 1; }
+.radar-readout p { margin: 4px 0 0; color: #91A6AD; font-size: 10px; line-height: 1.35; }
+
+@keyframes grid-drift { to { background-position: 0 0, 42px 42px, 42px 42px; } }
+@keyframes atmosphere-scan { to { transform: translateY(620%); } }
+@keyframes radar-rotate { to { transform: rotate(360deg); } }
+@keyframes signal-pulse { 0%, 100% { opacity: .65; transform: scale(.85); } 50% { opacity: 1; transform: scale(1.25); } }
+
+:root[data-theme="light"] .cyber-atmosphere { background-image: radial-gradient(ellipse at 82% 13%, rgba(0,127,145,.08), transparent 38%), linear-gradient(rgba(27,86,100,.035) 1px,transparent 1px), linear-gradient(90deg,rgba(27,86,100,.035) 1px,transparent 1px); }
+:root[data-theme="light"] .threat-radar { border-color: #BDD0D5; background: linear-gradient(145deg, rgba(239,247,248,.95), rgba(231,241,243,.92)); }
+:root[data-theme="light"] .radar-core { background: #ECF5F6; }
+:root[data-theme="light"] .radar-node { background: #EDF5F6; color: #526C72; }
+:root[data-theme="light"] .radar-node:hover, :root[data-theme="light"] .radar-node.is-active { background: #D9EFF1; color: #006C7B; }
+:root[data-theme="light"] .radar-readout strong { color: #17283F; }
+:root[data-theme="light"] .radar-readout p { color: #52647B; }
+
+@media (max-width: 860px) {
+  .overview-intro { grid-template-columns: minmax(0, 1fr); gap: 22px; }
+  .overview-intro-copy { gap: 16px; }
+  .threat-radar { width: min(100%, 380px); }
+}
+@media (max-width: 440px) {
+  .overview-intro { gap: 18px; padding-left: 12px; }
+  .overview-actions { width: 100%; }
+  .overview-actions .btn { flex: 1 1 auto; }
+  .threat-radar { padding: 10px; }
+  .radar-instrument { min-height: 158px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cyber-atmosphere, .cyber-scanline, .radar-sweep, .radar-blip { animation: none !important; }
+  .radar-sweep { opacity: .35; }
+}

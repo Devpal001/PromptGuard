@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Activity, ArrowRight, ArrowUpRight, FileSearch, LockKeyhole, ScanLine, ShieldCheck, Sparkles } from 'lucide-react'
 import { useWorkspace } from '../WorkspaceContext'
+import ThreatRadar from '../components/ThreatRadar'
 
 const Overview = () => {
   const { sessionResults } = useWorkspace()
@@ -10,15 +11,18 @@ const Overview = () => {
   return (
     <div className="overview-page">
       <section className="overview-intro">
-        <div>
-          <span className="eyebrow"><span className="eyebrow-dot" /> PROMPT INJECTION SECURITY LAB</span>
-          <h1>Test how your AI handles hostile instructions.</h1>
-          <p>Scan text and documents for suspicious instructions, then check how the demo target responds.</p>
+        <div className="overview-intro-copy">
+          <div>
+            <span className="eyebrow"><span className="eyebrow-dot" /> PROMPT INJECTION SECURITY LAB</span>
+            <h1>Test how your AI handles hostile instructions.</h1>
+            <p>Scan text and documents for suspicious instructions, then check how the demo target responds.</p>
+          </div>
+          <div className="overview-actions">
+            <Link to="/text" className="btn btn-primary"><ScanLine size={17} /> New text test <ArrowRight size={16} /></Link>
+            <Link to="/document" className="btn btn-secondary"><FileSearch size={17} /> Inspect a document</Link>
+          </div>
         </div>
-        <div className="overview-actions">
-          <Link to="/text" className="btn btn-primary"><ScanLine size={17} /> New text test <ArrowRight size={16} /></Link>
-          <Link to="/document" className="btn btn-secondary"><FileSearch size={17} /> Inspect a document</Link>
-        </div>
+        <ThreatRadar />
       </section>
 
       <section className="overview-status-grid" aria-label="Workspace status">

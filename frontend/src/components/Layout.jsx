@@ -20,6 +20,7 @@ export default function Layout({ children }) {
 
   return (
     <div className="app-shell" data-theme={theme}>
+      <div className="cyber-atmosphere" aria-hidden="true"><span className="cyber-scanline" /></div>
       <aside className="sidebar">
         <Link className="brand" to="/" aria-label="PromptGuard home">
           <span className="brand-mark"><ShieldCheck size={16} strokeWidth={2.2} /></span>
